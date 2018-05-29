@@ -18,7 +18,7 @@ parser.add_argument('-o',
   dest = 'output',
   action = 'store',
   default = None,
-  help = 'path to the input CSV file')
+  help = 'path to the output CSV file')
 parser.add_argument('-c', '--columns',
   metavar = '<list>',
   dest = 'columns',

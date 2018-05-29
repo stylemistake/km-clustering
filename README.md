@@ -1,6 +1,6 @@
 # km-clustering
 
-Clean room implementation of following clustering algorithms:
+Clean room implementation of the following clustering algorithms:
 
 - KMeans
 - Expectation maximization
@@ -27,7 +27,7 @@ usage: bin/clustering [-h] [-i <file>] [-o <file>] [-c <list>] [-k <number>]
 optional arguments:
   -h, --help            show this help message and exit
   -i <file>             path to the input CSV file
-  -o <file>             path to the input CSV file
+  -o <file>             path to the output CSV file
   -c <list>, --columns <list>
                         specify CSV columns with values (example: 0,1,2)
   -k <number>, --clusters <number>
