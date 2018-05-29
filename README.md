@@ -8,6 +8,11 @@ Clean room implementation of the following clustering algorithms:
 KMeans can work with multi-dimensional datasets, while EM can only work with
 two-dimensional datasets.
 
+Code has support for non-euclidean coordinate space, but doesn't have a
+front-facing API for it yet. Many functions in `lib.py` accept custom
+distance functions through `distance_fn` parameter, which is `eucl_distance`
+by default.
+
 
 ## Pre-requisites
 
@@ -29,7 +34,7 @@ optional arguments:
   -i <file>             path to the input CSV file
   -o <file>             path to the output CSV file
   -c <list>, --columns <list>
-                        specify CSV columns with values (example: 0,1,2)
+                        specify CSV columns to use (example: 0,1,2)
   -k <number>, --clusters <number>
                         number of clusters
   --kmeans              use KMeans algorithm

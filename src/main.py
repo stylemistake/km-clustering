@@ -24,7 +24,7 @@ parser.add_argument('-c', '--columns',
   dest = 'columns',
   action = 'store',
   default = None,
-  help = 'specify CSV columns with values (example: 0,1,2)')
+  help = 'specify CSV columns to use (example: 0,1,2)')
 parser.add_argument('-k', '--clusters',
   metavar = '<number>',
   dest = 'k',
