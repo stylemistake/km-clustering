@@ -5,8 +5,30 @@ import random
 import argparse
 import csv
 
+DISTANCE_FNS = {
+  'eucl': {
+    'fn': lib.eucl_distance,
+    'desc': 'euclidean distance',
+  },
+  'sad': {
+    'fn': lib.sad_distance,
+    'desc': 'sum of absolute difference',
+  },
+  'ssd': {
+    'fn': lib.ssd_distance,
+    'desc': 'sum of squared difference, aka euclidean norm',
+  },
+  'chebyshev': {
+    'fn': lib.chebyshev_distance,
+    'desc': 'chebyshev distance',
+  },
+}
+
+DISTANCE_FN_HELP = '(' + ', '.join(DISTANCE_FNS.keys()) + ')'
+
 ## Setup CLI
-parser = argparse.ArgumentParser(prog = 'bin/clustering')
+parser = argparse.ArgumentParser(prog = 'bin/clustering',
+  formatter_class = argparse.RawDescriptionHelpFormatter)
 parser.add_argument('-i',
   metavar = '<file>',
   dest = 'input',
@@ -31,6 +53,13 @@ parser.add_argument('-k', '--clusters',
   action = 'store',
   default = 2,
   help = 'number of clusters')
+parser.add_argument('-d', '--distance',
+  metavar = '<type>',
+  dest = 'distance',
+  action = 'store',
+  default = 'eucl',
+  choices = DISTANCE_FNS.keys(),
+  help = 'distance function ' + DISTANCE_FN_HELP)
 parser.add_argument('--kmeans',
   dest = 'kmeans',
   action = 'store_true',
@@ -87,7 +116,8 @@ else:
 
 ## Do calculations
 if args.kmeans:
-  centers, clusters = lib.kmeans(data, k = int(args.k))
+  centers, clusters = lib.kmeans(data, k = int(args.k),
+    distance_fn = DISTANCE_FNS[args.distance]['fn'])
 elif args.em:
   centers, clusters = lib.em_gaussian(data, k = int(args.k))
 else:

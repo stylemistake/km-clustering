@@ -22,6 +22,35 @@ def eucl_distance(a, b):
     total += (a[i] - b[i]) ** 2
   return math.sqrt(total)
 
+## Sum of absolute difference
+def sad_distance(a, b):
+  a = tuple(a)
+  b = tuple(b)
+  total = 0;
+  for i in range(0, len(a)):
+    total += abs(a[i] - b[i])
+  return total
+
+## Sum of squared differences
+## aka euclidean norm
+def ssd_distance(a, b):
+  a = tuple(a)
+  b = tuple(b)
+  total = 0;
+  for i in range(0, len(a)):
+    total += (a[i] - b[i]) ** 2
+  return total
+
+## Sum of squared differences
+## aka euclidean norm
+def chebyshev_distance(a, b):
+  a = tuple(a)
+  b = tuple(b)
+  diffs = [];
+  for i in range(0, len(a)):
+    diffs.append(abs(a[i] - b[i]))
+  return max(diffs)
+
 def first(items):
   return items[0] if items else None
 
@@ -82,7 +111,7 @@ def find_two_farthest(items):
   return result
 
 ## KMeans
-def kmeans(points, k = 2, epsilon = 0.001, iterations = 1000):
+def kmeans(points, k = 2, epsilon = 0.001, iterations = 1000, distance_fn = eucl_distance):
   ## Initialize cluster centers with a random sample
   cluster_centers = random.sample(points, k)
 
@@ -91,7 +120,7 @@ def kmeans(points, k = 2, epsilon = 0.001, iterations = 1000):
     ## Assign points to clusters
     clusters = [[] for _ in range(k)]
     for p, point in enumerate(points):
-      c = nearest(cluster_centers, point, as_index = True)
+      c = nearest(cluster_centers, point, as_index = True, distance_fn = distance_fn)
       clusters[c].append(point)
 
     ## Calculate new cluster centers
@@ -100,7 +129,7 @@ def kmeans(points, k = 2, epsilon = 0.001, iterations = 1000):
       cluster_centers_new[c] = mean(cluster_points)
 
     ## Evaluate difference between new and old cluster centers
-    cluster_center_distances = [eucl_distance(a, b)
+    cluster_center_distances = [distance_fn(a, b)
       for a, b in zip(cluster_centers, cluster_centers_new)]
 
     print('iteration: {}, diff: {}'.format(it, cluster_center_distances))
